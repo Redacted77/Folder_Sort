@@ -29,8 +29,6 @@ In it you can change:
 
 This includes all the important functions for the sorting process.
 
-![Example 2](Example/one_time.gif)
-
 ---
 
 ## logging_sort.py
@@ -52,6 +50,8 @@ It is possible to add a new extension grouping, just not as easily.
 
 - In **sorting.py**, create the new extension list in `special_condition` and add it to `conditions_extensions`.
 - Ensure the index matches in `conditions_extensions`, `condition_folder_names`, and `condition_flags`.
+
+![Example 2](Example/one_time.gif)
 
 ---
 
