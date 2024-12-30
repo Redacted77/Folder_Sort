@@ -21,7 +21,7 @@ In it you can change:
    - You can choose to let the program account for them or not by changing `account_for_special_files` to `False`.
    - If you don't want, for example, `audios` to be grouped, add `= None` at the end. This will make the program create a separate folder for the extension.
 
-![Example 1](Example/main_watchdog.mp4)
+![Example 1](Example/main_watchdog.gif)
 
 ---
 
@@ -29,7 +29,7 @@ In it you can change:
 
 This includes all the important functions for the sorting process.
 
-![Example 2](Example/one_time.mp4)
+![Example 2](Example/one_time.gif)
 
 ---
 
