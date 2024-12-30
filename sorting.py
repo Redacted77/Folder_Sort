@@ -83,9 +83,6 @@ def create_folder(folder_names: list = None):
         global foldernames
         folder_names = foldernames
     global folder_path
-    global condition_folder_names
-    global condition_flags
-    global conditions_extensions
 
     for name in folder_names:
         new_path = folder_path / name
