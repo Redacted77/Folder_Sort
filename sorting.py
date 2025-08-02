@@ -28,7 +28,6 @@ def special_condition(flag: bool = False ,video_extentions:list = None, image_ex
                          doc_extensions:list = None, audio_extensions:list = None, compressed_extensions:list = None):
     global conditions_extensions
     global condition_folder_names
-    global condition_flags
 
     video_extention_list = video_extentions
     image_extension_list = image_extensions
@@ -41,7 +40,6 @@ def special_condition(flag: bool = False ,video_extentions:list = None, image_ex
     conditions_extensions = [image_extension_list, video_extention_list, doc_extension_list, audio_extension_list
                              , compressed_extensions_list]
     condition_folder_names = ["Image_files","Video_files","documents","audio_files","compressed_files"]
-    condition_flags = [False, False, False, False, False]
 
 # checks all the files in the target folder, and creates a list of stray files and folder names
 def check_all_files():
@@ -63,7 +61,6 @@ def check_all_files():
             for index, condition in enumerate(conditions_extensions):
                 if extension in condition:
                     extension_list.append(condition_folder_names[index])
-                    condition_flags[index] = True
                     flag = False
             if flag:
                 extension = extension.split('.')
