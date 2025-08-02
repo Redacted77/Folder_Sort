@@ -26,12 +26,10 @@ log = logging_sort.logs(folder_path)
 # makes the script account for special files
 def special_condition(flag: bool = False ,video_extentions:list = None, image_extensions:list = None,
                          doc_extensions:list = None, audio_extensions:list = None, compressed_extensions:list = None):
-    global condition_flag
     global conditions_extensions
     global condition_folder_names
     global condition_flags
 
-    condition_flag = flag
     video_extention_list = video_extentions
     image_extension_list = image_extensions
     doc_extension_list = doc_extensions
@@ -49,7 +47,6 @@ def special_condition(flag: bool = False ,video_extentions:list = None, image_ex
 def check_all_files():
     log.call_to_check_all(folder_path)
     global foldernames
-    global extension_list
     global stray_file_list
     global conditions_extensions
     global condition_folder_names
@@ -132,7 +129,7 @@ def sort_condition(file):
     # goes through the list of condition lists
     for index, condition in enumerate(conditions_extensions):
         # checks if the list is not empty and if the files extension is in the list
-        if condition and extention in condition:  
+        if condition and extention in condition:
             # checks if the file already exists in the folder and calls rename if it does
             if Path.Path.exists(folder_path / folder_names[index] / file) and Path.Path.exists(folder_path / file):
                 rename(11, file, folder_names[index])
@@ -154,13 +151,15 @@ def sort_it():
 
     # goes through the list of stray files
     for file in stray_file_list:
+    
+        # checks if it needs to account for special files
+        if is_special(file):
+            sort_condition(file)
+            continue
+        
         # goes through the list of folder names
         for name in foldernames:
-            # checks if it needs to account for special files
-            if condition_flag:
-                # goes through folder names and checks if it's flag is true
-                if True in condition_flags:
-                    sort_condition(file)
+            
             # checks if the file has an extension that matches the folder name
             if Match.fnmatch(file, f'*.{name}') and Path.Path.exists(folder_path / name):
                 # checks if the file already exists in the folder and calls rename if it does
@@ -178,16 +177,24 @@ def sort_it():
                 break
     stray_file_list = []
 
+# checks if the file is part of the exceptions
+def is_special(file):
+    ext = file.split('.')[-1].lower()
+    for condition in conditions_extensions:
+        if "."+ext in condition:
+            return True
+    return False
+
 # one time sort
 if __name__ == "__main__":
-        videos = [".mp4",".mkv"]
-        images = [".png",".jpg",".jpeg",".webp"]
-        documents = [".docx",".doc",".pdf",".ppt",".pptx",".txt"]
-        audios = [".mp3",".flac"]
-        compressed_files = [".rar",".xz",".zip",".tar",".7z"]
-        account_for_special_files = True
-        special_condition(flag= account_for_special_files, video_extentions= videos, image_extensions= images,
-                   doc_extensions= documents,audio_extensions= audios, compressed_extensions= compressed_files)
-        check_all_files()
-        create_folder()
-        sort_it()
+    videos = [".mp4",".mkv"]
+    images = [".png",".jpg",".jpeg",".webp"]
+    documents = [".docx",".doc",".pdf",".ppt",".pptx",".txt"]
+    audios = [".mp3",".flac"]
+    compressed_files = [".rar",".xz",".zip",".tar",".7z"]
+    account_for_special_files = True
+    special_condition(flag= account_for_special_files, video_extentions= videos, image_extensions= images,
+                doc_extensions= documents,audio_extensions= audios, compressed_extensions= compressed_files)
+    check_all_files()
+    create_folder()
+    sort_it()
